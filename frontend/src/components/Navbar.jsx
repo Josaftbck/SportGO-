@@ -14,11 +14,14 @@ function AppNavbar() {
             <Nav.Link as={NavLink} to="/" end>
               Home
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/productos">
-              Productos
+            <Nav.Link as={NavLink} to="/products">
+              Products
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/categorias">
-              Categorías
+            <Nav.Link as={NavLink} to="/categories">
+              Categories
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/branches">
+              Branches
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

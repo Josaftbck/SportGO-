@@ -40,13 +40,28 @@ namespace SportGoApi.Controllers
             return item;
         }
 
-        // ✅ POST: api/Item
+        // ✅ POST: api/Item (Genera automáticamente un ItemCode)
         [HttpPost]
         public async Task<ActionResult<Item>> PostItem(Item item)
         {
-            item.Active = true; // Siempre lo dejamos activo al crear
+            // 🔹 Buscar el último ItemCode que empiece con PR
+            var lastItem = await _context.Items
+                .Where(i => i.ItemCode.StartsWith("PR"))
+                .OrderByDescending(i => Convert.ToInt32(i.ItemCode.Substring(2)))
+                .FirstOrDefaultAsync();
+
+            // 🔹 Generar el siguiente código
+            string lastCode = lastItem?.ItemCode ?? "PR0000";
+            int nextNumber = int.Parse(lastCode.Substring(2)) + 1;
+            string newCode = $"PR{nextNumber:D4}";
+
+            // 🔹 Asignar automáticamente el ItemCode y dejarlo activo
+            item.ItemCode = newCode;
+            item.Active = true;
+
             _context.Items.Add(item);
             await _context.SaveChangesAsync();
+
             return CreatedAtAction(nameof(GetItem), new { id = item.ItemCode }, item);
         }
 
@@ -72,7 +87,7 @@ namespace SportGoApi.Controllers
             return NoContent();
         }
 
-        // ✅ DELETE (lógico): api/Item/{id}
+        // ✅ DELETE (lógico): api/Item/{id} (desactiva)
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(string id)
         {

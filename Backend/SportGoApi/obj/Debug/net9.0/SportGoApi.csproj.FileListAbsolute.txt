@@ -198,3 +198,4 @@
 /Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/obj/Debug/net9.0/SportGoApi.pdb
 /Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/obj/Debug/net9.0/SportGoApi.genruntimeconfig.cache
 /Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/obj/Debug/net9.0/ref/SportGoApi.dll
+/Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/obj/Debug/net9.0/SportGoApi.sourcelink.json

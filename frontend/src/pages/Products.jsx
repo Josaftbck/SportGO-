@@ -8,6 +8,8 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState('active');
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentProduct, setCurrentProduct] = useState({
     itemCode: '',
     itemName: '',
@@ -19,7 +21,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5248/api/item');
+      const response = await axios.get('http://localhost:5248/api/item/todos');
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -48,7 +50,13 @@ const Products = () => {
     setShowModal(true);
   };
 
+  const openDeactivateModal = (product) => {
+    setSelectedProduct(product);
+    setShowConfirmModal(true);
+  };
+
   const closeModal = () => setShowModal(false);
+  const closeConfirmModal = () => setShowConfirmModal(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -72,14 +80,23 @@ const Products = () => {
     }
   };
 
-  const handleDelete = async (itemCode) => {
-    const confirm = window.confirm('Are you sure you want to deactivate this product?');
-    if (!confirm) return;
+  const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5248/api/item/${itemCode}`);
+      await axios.delete(`http://localhost:5248/api/item/${selectedProduct.itemCode}`);
       fetchProducts();
     } catch (error) {
       console.error('Error deleting product:', error);
+    } finally {
+      closeConfirmModal();
+    }
+  };
+
+  const handleActivate = async (itemCode) => {
+    try {
+      await axios.put(`http://localhost:5248/api/item/${itemCode}/activar`);
+      fetchProducts();
+    } catch (error) {
+      console.error('Error activating product:', error);
     }
   };
 
@@ -99,7 +116,6 @@ const Products = () => {
         </Button>
       </div>
 
-      {/* 🔽 Filtro con SELECT */}
       <div className="mb-3" style={{ maxWidth: '200px' }}>
         <Form.Select
           value={filter}
@@ -143,12 +159,21 @@ const Products = () => {
                   >
                     Edit
                   </Button>
-                  <Button
-                    variant="warning"
-                    onClick={() => handleDelete(product.itemCode)}
-                  >
-                    Deactivate
-                  </Button>
+                  {product.active ? (
+                    <Button
+                      variant="warning"
+                      onClick={() => openDeactivateModal(product)}
+                    >
+                      Deactivate
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="secondary"
+                      onClick={() => handleActivate(product.itemCode)}
+                    >
+                      Activate
+                    </Button>
+                  )}
                 </ButtonGroup>
               </td>
             </tr>
@@ -156,23 +181,13 @@ const Products = () => {
         </tbody>
       </Table>
 
-      {/* Modal */}
+      {/* Modal para Crear/Editar */}
       <Modal show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
           <Modal.Title>{editMode ? 'Edit Product' : 'Create Product'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-2">
-              <Form.Label>Code</Form.Label>
-              <Form.Control
-                type="text"
-                name="itemCode"
-                value={currentProduct.itemCode}
-                onChange={handleChange}
-                disabled={editMode}
-              />
-            </Form.Group>
             <Form.Group className="mb-2">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -185,26 +200,48 @@ const Products = () => {
             <Form.Group className="mb-2">
               <Form.Label>Price</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 name="price"
+                placeholder="Ej. 299.99"
                 value={currentProduct.price}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^\d*\.?\d{0,2}$/.test(value) || value === '') {
+                    setCurrentProduct((prev) => ({
+                      ...prev,
+                      price: value
+                    }));
+                  }
+                }}
+                inputMode="decimal"
               />
             </Form.Group>
             <Form.Group className="mb-2">
               <Form.Label>Stock</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 name="onHand"
+                placeholder="Ej. 15"
                 value={currentProduct.onHand}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^\d*$/.test(value) || value === '') {
+                    setCurrentProduct((prev) => ({
+                      ...prev,
+                      onHand: value
+                    }));
+                  }
+                }}
+                inputMode="numeric"
               />
             </Form.Group>
             <Form.Group className="mt-3">
+              <Form.Label>Status</Form.Label>
               <Form.Check
-                type="checkbox"
+                type="switch"
                 name="active"
-                label="Active"
+                id="active-switch"
+                label={currentProduct.active ? 'Active' : 'Inactive'}
                 checked={currentProduct.active}
                 onChange={handleChange}
               />
@@ -216,6 +253,20 @@ const Products = () => {
           <Button variant="primary" onClick={handleSave}>
             {editMode ? 'Update' : 'Save'}
           </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal de confirmación */}
+      <Modal show={showConfirmModal} onHide={closeConfirmModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deactivation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to deactivate <strong>{selectedProduct?.itemName}</strong>?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeConfirmModal}>Cancel</Button>
+          <Button variant="warning" onClick={handleDelete}>Yes, deactivate</Button>
         </Modal.Footer>
       </Modal>
     </Container>

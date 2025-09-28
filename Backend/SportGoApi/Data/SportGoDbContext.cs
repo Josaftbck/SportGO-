@@ -7,10 +7,13 @@ namespace SportGoApi.Data
     {
         public SportGoDbContext(DbContextOptions<SportGoDbContext> options)
             : base(options)
+
         {
         }
 
         // 👇 Aquí agregás tus entidades
         public DbSet<Item> Items { get; set; }
+        public DbSet<Branch> Branches { get; set; }
+        
     }
 }
