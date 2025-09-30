@@ -1,19 +1,31 @@
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Products from './pages/Products';
-import Branches from './pages/Branches';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/LOG/Login';
+import DashboardApp from './components/DashboardApp';
+import ProtectedRoute from './utils/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/branches" element={<Branches />} />
-      </Routes>
-    </>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Login público */}
+          <Route path="/login" element={<Login />} />
+
+          {/* Dashboard protegido */}
+          <Route
+            path="/dashboard/*"
+            element={
+              <ProtectedRoute>
+
+                <DashboardApp />
+
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

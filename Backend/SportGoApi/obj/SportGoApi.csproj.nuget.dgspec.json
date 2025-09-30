@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/SportGoApi.csproj": {}
+    "C:\\Users\\ghost\\OneDrive\\Documentos\\Universidad UMG\\Sexto semestre\\BASE DE DATOS I\\proyecto base de datos I\\SportGO-\\Backend\\SportGoApi\\SportGoApi.csproj": {}
   },
   "projects": {
-    "/Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/SportGoApi.csproj": {
+    "C:\\Users\\ghost\\OneDrive\\Documentos\\Universidad UMG\\Sexto semestre\\BASE DE DATOS I\\proyecto base de datos I\\SportGO-\\Backend\\SportGoApi\\SportGoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/SportGoApi.csproj",
+        "projectUniqueName": "C:\\Users\\ghost\\OneDrive\\Documentos\\Universidad UMG\\Sexto semestre\\BASE DE DATOS I\\proyecto base de datos I\\SportGO-\\Backend\\SportGoApi\\SportGoApi.csproj",
         "projectName": "SportGoApi",
-        "projectPath": "/Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/SportGoApi.csproj",
-        "packagesPath": "/Users/josafatalvarado/.nuget/packages/",
-        "outputPath": "/Users/josafatalvarado/SportGoSolution/Backend/SportGoApi/obj/",
+        "projectPath": "C:\\Users\\ghost\\OneDrive\\Documentos\\Universidad UMG\\Sexto semestre\\BASE DE DATOS I\\proyecto base de datos I\\SportGO-\\Backend\\SportGoApi\\SportGoApi.csproj",
+        "packagesPath": "C:\\Users\\ghost\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ghost\\OneDrive\\Documentos\\Universidad UMG\\Sexto semestre\\BASE DE DATOS I\\proyecto base de datos I\\SportGO-\\Backend\\SportGoApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/josafatalvarado/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ghost\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -44,6 +44,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.9, )"
@@ -82,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

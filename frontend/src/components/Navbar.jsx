@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
+import LogoutButton from './LOG/LogoutButton'; // Importa el componente LogoutButton
 import { Container, Nav, Navbar } from 'react-bootstrap';
+
 
 function AppNavbar() {
   return (
@@ -11,18 +13,21 @@ function AppNavbar() {
         <Navbar.Toggle aria-controls="main-navbar" />
         <Navbar.Collapse id="main-navbar">
           <Nav className="ms-auto">
-            <Nav.Link as={NavLink} to="/" end>
+            <Nav.Link as={NavLink} to="/dashboard" end>
               Home
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/products">
+            <Nav.Link as={NavLink} to="/dashboard/products">
               Products
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/categories">
+            <Nav.Link as={NavLink} to="/dashboard/categories">
               Categories
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/branches">
+            <Nav.Link as={NavLink} to="/dashboard/branches">
               Branches
             </Nav.Link>
+            <Nav.Item>
+              <LogoutButton />
+            </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Container>

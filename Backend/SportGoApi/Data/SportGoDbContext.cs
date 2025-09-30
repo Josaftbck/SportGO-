@@ -14,6 +14,7 @@ namespace SportGoApi.Data
         // 👇 Aquí agregás tus entidades
         public DbSet<Item> Items { get; set; }
         public DbSet<Branch> Branches { get; set; }
-        
+        public DbSet<User> Users { get; set; } // <-- Aquí el nombre de tu modelo
+
     }
 }
