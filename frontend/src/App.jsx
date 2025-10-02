@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/LOG/Login';
 import DashboardApp from './components/DashboardApp';
 import ProtectedRoute from './utils/ProtectedRoute';
@@ -9,6 +9,9 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          {/* Redirección de "/" a "/login" */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+
           {/* Login público */}
           <Route path="/login" element={<Login />} />
 
@@ -17,9 +20,7 @@ function App() {
             path="/dashboard/*"
             element={
               <ProtectedRoute>
-
                 <DashboardApp />
-
               </ProtectedRoute>
             }
           />
@@ -28,5 +29,4 @@ function App() {
     </AuthProvider>
   );
 }
-
 export default App;

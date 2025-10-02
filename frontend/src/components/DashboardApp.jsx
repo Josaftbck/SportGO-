@@ -3,6 +3,8 @@ import AppNavbar from './Navbar';
 import Home from '../pages/Home';
 import Products from '../pages/Products';
 import Branches from '../pages/Branches';
+import Clients from '../pages/Clients';
+import SalesPersons from '../pages/SalesPersons';
 
 function DashboardApp() {
   return (
@@ -13,6 +15,8 @@ function DashboardApp() {
           <Route path="/" element={<Home />} />
           <Route path="products" element={<Products />} />
           <Route path="branches" element={<Branches />} />
+          <Route path="clients" element={<Clients />} />
+          <Route path="Salespersons" element={<SalesPersons />} />
         </Routes>
       </div>
     </>

@@ -24,6 +24,12 @@ function AppNavbar() {
             </Nav.Link>
             <Nav.Link as={NavLink} to="/dashboard/branches">
               Branches
+           </Nav.Link>
+            <Nav.Link as={NavLink} to="/dashboard/clients">
+              Clients
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/dashboard/Salespersons">
+              Salespersons
             </Nav.Link>
             <Nav.Item>
               <LogoutButton />
